@@ -9,13 +9,41 @@ object HelloWorld
   def main(args: Array[String]): Unit = {
     printHello
     println(add(1,3)) // prints 4
+
+    val mySquare = new Square(3)
+    val myEqTriangle = new Triangle(2)
+    val myIsoTriangle = new IsoTriangle(3,4)
+    val myScaleneTriangle = new ScaleneTriangle(3,4,5)
+    val myCircle = new Circle(3.0)
+
+    printShape(mySquare)
+    printShape(myEqTriangle)
+    printShape(myIsoTriangle)
+    printShape(myScaleneTriangle)
+    printShape(myCircle)
     
   }
   def printHello() = println(myString)
   def add(a :Int, b :Int): Int = {
     a + b
   }
+
+
+
+
+
+  def printShape(s: Shape): Unit = s match
+  {
+    case a: ScaleneTriangle => println("That's a Scalene Triangle!")
+    case b: IsoTriangle => println("That's a Isosceles Triangle!")
+    case c: Triangle => println("That's an Eq Triangle")
+    case d: Square => println("That's a Square!")
+    case _ => println("Never seen that shape before...")
+  }
+
 }
+
+
 
 
 
@@ -37,7 +65,7 @@ class Circle(radius: Double) extends Shape
 
 class Square(height: Int) extends Shape
 {
-  def getSides: Double = 4
+  def getSides: Double = 4.0
 
   def getArea: Double = height * height
 }
@@ -47,30 +75,29 @@ class Rectangle(height: Int, width: Int) extends Square(height: Int)
   override def getArea: Double = height * width
 }
 
-class Triangle(sideLength: Int, side1: Int) extends Shape
+class Triangle(side: Int) extends Shape
 {
-  val _side1 = side1
-  val _side2 = side1
-  val _side3 = side1
+  override def getSides: Double = 3.0
 
-  override def getSides: Double = 3
-
-  def getArea: Double = {
-    val p = (_side1 + _side2 + _side3)/3
-    sqrt(p*(p-_side1)*(p-_side2)*(p-_side3))
+  override def getArea: Double = {
+    val p = side
+    sqrt(p*(p-side)*(p-side)*(p-side))
   }
 }
 
-class IsoTriangle(sideLength: Int, side1: Int, side2: Int) extends Triangle(sideLength: Int, side1: Int)
+class IsoTriangle(side: Int, otherSide: Int) extends Triangle(side: Int)
 {
-  override val this._side1 = side1
-  override val this._side3 = side1
-  override val this._side2 = side2
+  override def getArea: Double = {
+    val p = (side + (otherSide*2))/3
+    sqrt(p*(p-side)*(p-otherSide)*(p-otherSide))
+  }
+
 }
-class ScaleneTriangle(sideLength: Int, side1: Int, side2: Int, side3: Int) extends IsoTriangle(sideLength: Int, side1: Int, side2: Int)
+class ScaleneTriangle(side1: Int, side2: Int, side3: Int) extends IsoTriangle(side1: Int, side2: Int)
 {
-  override val this._side1 = side1
-  override val this._side2 = side2
-  override val this._side3 = side3
+  override def getArea: Double = {
+    val p = (side1 + side2 + side3)/3
+    sqrt(p*(p-side1)*(p-side2)*(p-side3))
+  }
 }
 
