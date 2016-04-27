@@ -21,9 +21,23 @@ object HelloWorld
     printShape(myIsoTriangle)
     printShape(myScaleneTriangle)
     printShape(myCircle)
-    
+
+    val myList =  List(1,3,5,7,9,11,13,15)
+    val newList = myList.filter(_ % 3 == 0)
+    println(newList)
+    val otherList = myList.map(_ * 2)
+    println(otherList)
+    println(otherList.fold(0)(_ + _))
+
+    val newOtherList = myList :+ 17
+    println(newOtherList)
   }
+
+
+
+
   def printHello() = println(myString)
+
   def add(a :Int, b :Int): Int = {
     a + b
   }
